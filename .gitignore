@@ -1,0 +1,18 @@
+node_modules
+.next
+out
+build
+.DS_Store
+.env*.local
+.vercel
+*.tsbuildinfo
+next-env.d.ts
+
+# editor / agent state
+.claude/
+*.log
+.idea/
+.vscode/
+
+# generated artefact (rebuilt from lib/heatmap.json on demand)
+lib/github-raw.json
