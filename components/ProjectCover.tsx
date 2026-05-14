@@ -6,7 +6,8 @@ type Kind =
   | "aiskills"
   | "collegeerp"
   | "linkbuild"
-  | "projects";
+  | "projects"
+  | "gym";
 
 const ACCENT = "#C5FF3D";
 
@@ -220,6 +221,58 @@ export default function ProjectCover({
             style={{ fontFamily: "ui-monospace", fontSize: 10 }}
           >
             python · fastapi · docker
+          </text>
+        </Frame>
+      );
+
+    case "gym":
+      return (
+        <Frame className={className} bg="#0A0E0A">
+          {/* Dumbbell silhouette */}
+          <g stroke={ACCENT} fill="none" strokeWidth="2" strokeLinecap="round">
+            {/* Left plate stack */}
+            <rect x="38" y="98" width="10" height="44" rx="2" fill="#0A0E0A" />
+            <rect x="52" y="86" width="14" height="68" rx="2" fill="#0A0E0A" />
+            {/* Bar */}
+            <line x1="66" y1="120" x2="234" y2="120" strokeWidth="3" />
+            {/* Knurling marks */}
+            <line x1="120" y1="116" x2="120" y2="124" strokeOpacity="0.6" />
+            <line x1="130" y1="116" x2="130" y2="124" strokeOpacity="0.6" />
+            <line x1="170" y1="116" x2="170" y2="124" strokeOpacity="0.6" />
+            <line x1="180" y1="116" x2="180" y2="124" strokeOpacity="0.6" />
+            {/* Right plate stack */}
+            <rect x="234" y="86" width="14" height="68" rx="2" fill="#0A0E0A" />
+            <rect x="252" y="98" width="10" height="44" rx="2" fill="#0A0E0A" />
+          </g>
+          {/* Pulse line under */}
+          <polyline
+            points="20,180 60,180 76,168 92,196 108,170 124,180 280,180"
+            stroke={ACCENT}
+            strokeWidth="1.4"
+            fill="none"
+            strokeOpacity="0.7"
+          />
+          <text
+            x="22"
+            y="56"
+            fill="#fff"
+            opacity="0.55"
+            style={{
+              fontFamily: "ui-monospace",
+              fontSize: 10,
+              letterSpacing: 1,
+            }}
+          >
+            REPS · SETS · PROGRESS
+          </text>
+          <text
+            x="22"
+            y="216"
+            fill="#fff"
+            opacity="0.5"
+            style={{ fontFamily: "ui-monospace", fontSize: 10 }}
+          >
+            svelte · tailwind · daisyui
           </text>
         </Frame>
       );

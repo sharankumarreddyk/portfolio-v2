@@ -61,7 +61,7 @@ export default function Nav() {
             <span className="grid h-7 w-7 place-items-center rounded-full border border-[color:var(--color-accent)] text-[10px] font-semibold text-[color:var(--color-accent-ink)] transition-colors group-hover:bg-[color:var(--color-accent)] group-hover:text-black">
               S
             </span>
-            <span>{profile.shortName.toLowerCase()}.dev</span>
+            <span>{profile.shortName.toLowerCase()}</span>
           </a>
 
           <nav className="hidden gap-8 md:flex">

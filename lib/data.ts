@@ -111,6 +111,13 @@ export const marqueeStack = [
   "GSAP",
 ];
 
+export type ProgressionStep = {
+  period: string;
+  title: string;
+  type: "Intern" | "Contract" | "Full-time";
+  current?: boolean;
+};
+
 export type Experience = {
   role: string;
   company: string;
@@ -118,15 +125,41 @@ export type Experience = {
   location?: string;
   points: string[];
   stat: { k: string; v: string };
+  startISO?: string;
+  progression?: ProgressionStep[];
 };
 
 export const experiences: Experience[] = [
   {
     role: "Software Engineer",
     company: "Indpro",
-    period: "2024 — Present",
+    period: "Oct 2024 — Present",
     location: "Bengaluru · for the Stockholm HQ",
+    startISO: "2024-10-01",
     stat: { k: "50+", v: "PRs merged / month" },
+    progression: [
+      {
+        period: "Oct '24 — Nov '24",
+        title: "Full Stack Developer",
+        type: "Intern",
+      },
+      {
+        period: "Dec '24 — Feb '25",
+        title: "Junior Software Developer",
+        type: "Intern",
+      },
+      {
+        period: "Mar '25 — Jun '25",
+        title: "Junior Software Engineer",
+        type: "Contract",
+      },
+      {
+        period: "Jul '25 — Present",
+        title: "Junior Software Engineer",
+        type: "Full-time",
+        current: true,
+      },
+    ],
     points: [
       "Ship across a multi-product portfolio: AI learning platform, startup-ecosystem analytics, e-commerce returns, sustainability APIs.",
       "Full-stack delivery in TypeScript + Python — React / Next.js / Svelte on the front, Node / FastAPI on the back, Postgres / Qdrant underneath.",
@@ -159,7 +192,14 @@ export type Project = {
   description: string;
   tags: string[];
   url: string;
-  cover: "kubeai" | "restaurantos" | "aiskills" | "collegeerp" | "linkbuild" | "projects";
+  cover:
+    | "kubeai"
+    | "restaurantos"
+    | "aiskills"
+    | "collegeerp"
+    | "linkbuild"
+    | "projects"
+    | "gym";
   highlight?: boolean;
 };
 
@@ -187,6 +227,14 @@ export const projects: Project[] = [
     tags: ["JavaScript", "Full-stack"],
     url: "https://github.com/sharankumarreddyk/College-ERP",
     cover: "collegeerp",
+  },
+  {
+    name: "Gym-website",
+    description:
+      "Marketing site for a fitness brand — Svelte + Tailwind & DaisyUI, with route-based sections, dark-mode toggle, and component primitives in a SvelteKit project.",
+    tags: ["Svelte", "SvelteKit", "Tailwind", "DaisyUI"],
+    url: "https://github.com/sharankumarreddyk/Gym-website",
+    cover: "gym",
   },
 ];
 
