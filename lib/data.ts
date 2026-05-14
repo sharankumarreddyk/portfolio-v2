@@ -161,6 +161,7 @@ export const experiences: Experience[] = [
       },
     ],
     points: [
+      "SWAT lead since Dec 2025 — running rapid-response engineering across the Indpro portfolio: cross-product firefighting, complex initiatives, escalations.",
       "Ship across a multi-product portfolio: AI learning platform, startup-ecosystem analytics, e-commerce returns, sustainability APIs.",
       "Full-stack delivery in TypeScript + Python — React / Next.js / Svelte on the front, Node / FastAPI on the back, Postgres / Qdrant underneath.",
       "Own features end-to-end: design, backend, frontend, data, deploy — across 7+ repos in active rotation.",
