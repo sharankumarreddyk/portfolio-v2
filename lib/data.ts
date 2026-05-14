@@ -188,22 +188,6 @@ export const projects: Project[] = [
     url: "https://github.com/sharankumarreddyk/College-ERP",
     cover: "collegeerp",
   },
-  {
-    name: "link-2-build-backend",
-    description:
-      "Python backend service — REST API with Mako templating and Dockerised deploy.",
-    tags: ["Python", "FastAPI", "Docker"],
-    url: "https://github.com/sharankumarreddyk/link-2-build-backend",
-    cover: "linkbuild",
-  },
-  {
-    name: "Project-S",
-    description:
-      "Cross-platform mobile app — Ionic + TypeScript frontend with a TypeScript backend.",
-    tags: ["TypeScript", "Ionic", "Mobile"],
-    url: "https://github.com/sharankumarreddyk/Project-S-Ionic",
-    cover: "projects",
-  },
 ];
 
 export const navLinks = [
