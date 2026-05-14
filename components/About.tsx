@@ -1,9 +1,37 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { profile } from "@/lib/data";
+import type { GitHubLiveData } from "@/lib/github";
 import Reveal from "./Reveal";
 
-export default function About() {
+function formatLatestDeploy(iso: string | undefined) {
+  if (!iso) return "—";
+  try {
+    return new Date(iso)
+      .toLocaleTimeString("en-US", {
+        timeZone: "Asia/Kolkata",
+        hour: "numeric",
+        minute: "2-digit",
+        hour12: true,
+      })
+      .toLowerCase()
+      .replace(/\s/g, "");
+  } catch {
+    return "—";
+  }
+}
+
+export default function About({ github }: { github: GitHubLiveData }) {
+  const latestCommit = github.recentCommits[0];
+  const [deployTime, setDeployTime] = useState<string>(() =>
+    formatLatestDeploy(latestCommit?.date)
+  );
+
+  useEffect(() => {
+    setDeployTime(formatLatestDeploy(latestCommit?.date));
+  }, [latestCommit?.date]);
+
   return (
     <section
       id="about"
@@ -74,7 +102,11 @@ export default function About() {
           <Reveal delay={300}>
             <div className="grid grid-cols-3 gap-6 border-t border-[color:var(--color-line)] pt-6">
               <Stat k="2024" v="shipping at indpro since" />
-              <Stat k="2:14am" v="latest deploy" />
+              <Stat
+                k={deployTime}
+                v="latest commit"
+                hydrationSafe
+              />
               <Stat k="BLR" v="utc +5:30" />
             </div>
           </Reveal>
@@ -84,10 +116,23 @@ export default function About() {
   );
 }
 
-function Stat({ k, v }: { k: string; v: string }) {
+function Stat({
+  k,
+  v,
+  hydrationSafe = false,
+}: {
+  k: string;
+  v: string;
+  hydrationSafe?: boolean;
+}) {
   return (
     <div>
-      <div className="display text-2xl sm:text-3xl">{k}</div>
+      <div
+        className="display text-2xl sm:text-3xl"
+        suppressHydrationWarning={hydrationSafe}
+      >
+        {k}
+      </div>
       <div className="num-tag mt-2">{v}</div>
     </div>
   );

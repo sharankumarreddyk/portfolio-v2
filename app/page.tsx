@@ -23,7 +23,7 @@ export default async function Page() {
         <Projects />
         <Skills />
         <Experience />
-        <About />
+        <About github={github} />
         <Contact />
       </main>
       <Footer />
