@@ -17,8 +17,9 @@ const ELSEWHERE = [
   { label: "GitHub", href: profile.github },
   { label: "LinkedIn", href: profile.linkedin },
   { label: "Email", href: `mailto:${profile.email}` },
-  { label: "/now", href: "/now" },
-  { label: "/writing", href: "/writing" },
+  { label: "Lab", href: "/lab" },
+  { label: "Now", href: "/now" },
+  { label: "Writing", href: "/writing" },
 ];
 
 const BUILT_WITH = [

@@ -6,7 +6,6 @@ import {
   Newsreader,
 } from "next/font/google";
 import "./globals.css";
-import SmoothScroll from "@/components/SmoothScroll";
 import Loader from "@/components/Loader";
 import CommandPalette from "@/components/CommandPalette";
 import ScrollProgress from "@/components/ScrollProgress";
@@ -14,6 +13,7 @@ import SectionDrift from "@/components/SectionDrift";
 import EasterEgg from "@/components/EasterEgg";
 import KeyboardShortcuts from "@/components/KeyboardShortcuts";
 import ShortcutHelp from "@/components/ShortcutHelp";
+import RouteTransition from "@/components/RouteTransition";
 import { profile } from "@/lib/data";
 
 const inter = Inter({
@@ -138,13 +138,14 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
         />
         <Loader />
+        <RouteTransition />
         <ScrollProgress />
         <SectionDrift />
         <EasterEgg />
         <KeyboardShortcuts />
         <ShortcutHelp />
         <CommandPalette />
-        <SmoothScroll>{children}</SmoothScroll>
+        {children}
       </body>
     </html>
   );

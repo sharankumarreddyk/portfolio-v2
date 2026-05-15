@@ -142,6 +142,22 @@ export default function CommandPalette() {
       run: () => (window.location.href = "/now"),
     },
     {
+      id: "open-lab",
+      label: "Visit /lab",
+      hint: "interactive experiments",
+      keywords: ["lab", "demos", "experiments", "playground"],
+      group: "open",
+      run: () => (window.location.href = "/lab"),
+    },
+    {
+      id: "open-writing",
+      label: "Visit /writing",
+      hint: "essays and drafts",
+      keywords: ["writing", "essays", "blog"],
+      group: "open",
+      run: () => (window.location.href = "/writing"),
+    },
+    {
       id: "theme-dark",
       label: "Theme: Dark",
       hint: "near-black + lime",
