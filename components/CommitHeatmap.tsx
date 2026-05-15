@@ -143,13 +143,15 @@ export default function CommitHeatmap({
                   const lvl = levelFor(d.c);
                   const cellDelay = colDelay + di * 6;
                   return (
-                    <button
+                    <a
                       key={`${wi}-${di}`}
-                      type="button"
-                      aria-label={`${d.c} contributions on ${d.d}`}
+                      href={`https://github.com/sharankumarreddyk?tab=overview&from=${d.d}&to=${d.d}`}
+                      target="_blank"
+                      rel="noreferrer"
+                      aria-label={`${d.c} contributions on ${d.d} · open on GitHub`}
                       onMouseEnter={(e) => {
                         const r = (
-                          e.currentTarget as HTMLButtonElement
+                          e.currentTarget as HTMLAnchorElement
                         ).getBoundingClientRect();
                         setHover({
                           c: d.c,
@@ -158,7 +160,7 @@ export default function CommitHeatmap({
                           y: r.top,
                         });
                       }}
-                      className={`${cell} rounded-[2px] transition-transform duration-150 ease-out hover:scale-[1.4]`}
+                      className={`${cell} block rounded-[2px] transition-transform duration-150 ease-out hover:scale-[1.6]`}
                       style={
                         drawn
                           ? { background: SCALE[lvl] }
@@ -201,20 +203,25 @@ export default function CommitHeatmap({
       {hover ? (
         <div
           aria-hidden
-          className="pointer-events-none fixed z-[180] -translate-x-1/2 -translate-y-full rounded-md border border-[color:var(--color-line)] bg-[color:var(--color-card)] px-2.5 py-1.5 text-[11px] shadow-xl"
+          className="pointer-events-none fixed z-[180] flex -translate-x-1/2 -translate-y-full flex-col gap-0.5 rounded-md border border-[color:var(--color-line)] bg-[color:var(--color-card)] px-2.5 py-1.5 text-[11px] shadow-xl"
           style={{ left: hover.x, top: hover.y - 6 }}
         >
-          <span className="font-mono text-[color:var(--color-fg)]">
-            {hover.c}
-          </span>{" "}
-          contributions on{" "}
-          <span className="text-[color:var(--color-muted)]">
-            {new Date(hover.d).toLocaleDateString("en-GB", {
-              day: "numeric",
-              month: "short",
-              year: "numeric",
-            })}
-          </span>
+          <div>
+            <span className="font-mono text-[color:var(--color-fg)]">
+              {hover.c}
+            </span>{" "}
+            contributions on{" "}
+            <span className="text-[color:var(--color-muted)]">
+              {new Date(hover.d).toLocaleDateString("en-GB", {
+                day: "numeric",
+                month: "short",
+                year: "numeric",
+              })}
+            </span>
+          </div>
+          <div className="font-mono text-[9px] uppercase tracking-widest text-[color:var(--color-accent-ink)]">
+            click → see this day on GitHub ↗
+          </div>
         </div>
       ) : null}
 

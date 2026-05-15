@@ -13,6 +13,7 @@ import ScrollProgress from "@/components/ScrollProgress";
 import SectionDrift from "@/components/SectionDrift";
 import EasterEgg from "@/components/EasterEgg";
 import KeyboardShortcuts from "@/components/KeyboardShortcuts";
+import ShortcutHelp from "@/components/ShortcutHelp";
 import { profile } from "@/lib/data";
 
 const inter = Inter({
@@ -141,6 +142,7 @@ export default function RootLayout({
         <SectionDrift />
         <EasterEgg />
         <KeyboardShortcuts />
+        <ShortcutHelp />
         <CommandPalette />
         <SmoothScroll>{children}</SmoothScroll>
       </body>

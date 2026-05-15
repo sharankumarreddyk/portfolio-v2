@@ -4,7 +4,6 @@ import { useEffect, useRef, useState } from "react";
 import { profile } from "@/lib/data";
 import type { GitHubLiveData } from "@/lib/github";
 import CommitHeatmap from "./CommitHeatmap";
-import Magnetic from "./Magnetic";
 import Reveal from "./Reveal";
 import CountUp from "./CountUp";
 
@@ -177,16 +176,13 @@ export default function Hero({ github }: { github: GitHubLiveData }) {
                 <path d="M3 8 L13 8 M9 4 L13 8 L9 12" />
               </svg>
             </a>
-            <Magnetic strength={0.3} range={120}>
-              <a
-                href={`mailto:${profile.email}?subject=Hi%20from%20sharan.dev`}
-                data-magnetic="true"
-                className="inline-flex items-center gap-2 rounded-full bg-[color:var(--color-accent)] px-5 py-3 text-sm tracking-tight text-black"
-              >
-                Say hi
-                <span aria-hidden>↗</span>
-              </a>
-            </Magnetic>
+            <a
+              href={`mailto:${profile.email}?subject=Hi%20from%20sharan.dev`}
+              className="inline-flex items-center gap-2 rounded-full bg-[color:var(--color-accent)] px-5 py-3 text-sm tracking-tight text-black transition-transform duration-200 hover:scale-[1.03]"
+            >
+              Say hi
+              <span aria-hidden>↗</span>
+            </a>
           </div>
         </div>
       </div>

@@ -12,7 +12,15 @@ export const revalidate = 3600;
 
 // Update this when you actually change the page content.
 // Used to render the "last updated" stamp.
-const LAST_UPDATED_ISO = "2026-05-14";
+const LAST_UPDATED_ISO = "2026-05-15";
+
+const CURRENT_BOOK = {
+  title: "Designing Data-Intensive Applications",
+  author: "Martin Kleppmann",
+  chapter: "Chapter 6 · Partitioning",
+  progress: 62,
+  startedAt: "2026-04-22",
+};
 
 const focus = [
   {
@@ -116,6 +124,40 @@ export default async function NowPage() {
               </dd>
             </div>
           </dl>
+        </div>
+
+        {/* Currently reading — micro widget */}
+        <div className="mt-12 overflow-hidden rounded-2xl border border-[color:var(--color-line)] bg-[color:var(--color-card)]">
+          <div className="flex items-baseline justify-between gap-3 border-b border-[color:var(--color-line)] px-5 py-3">
+            <span className="num-tag text-[color:var(--color-accent-ink)]">
+              currently reading
+            </span>
+            <span className="num-tag">
+              started {new Date(CURRENT_BOOK.startedAt).toLocaleDateString("en-GB", { day: "numeric", month: "short" })}
+            </span>
+          </div>
+          <div className="p-5 sm:p-6">
+            <p
+              className="serif text-balance leading-[1.15] text-[color:var(--color-fg)]"
+              style={{ fontSize: "clamp(1.4rem, 3vw, 2rem)" }}
+            >
+              {CURRENT_BOOK.title}
+            </p>
+            <p className="mt-2 text-sm text-[color:var(--color-muted)]">
+              {CURRENT_BOOK.author} · {CURRENT_BOOK.chapter}
+            </p>
+            <div className="mt-4 flex items-center gap-3">
+              <div className="h-1 flex-1 overflow-hidden rounded-full bg-[color:var(--color-bg)]">
+                <div
+                  className="h-full rounded-full bg-[color:var(--color-accent)]"
+                  style={{ width: `${CURRENT_BOOK.progress}%` }}
+                />
+              </div>
+              <span className="font-mono text-[11px] text-[color:var(--color-muted)]">
+                {CURRENT_BOOK.progress}%
+              </span>
+            </div>
+          </div>
         </div>
 
         <div className="mt-16 flex flex-col gap-12">
