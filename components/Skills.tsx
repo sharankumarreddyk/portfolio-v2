@@ -47,7 +47,7 @@ export default function Skills() {
       <div className="mx-auto max-w-[1500px] px-6 sm:px-10">
         <Reveal>
           <div className="flex items-center gap-4">
-            <span className="num-tag text-[color:var(--color-accent-ink)]">
+            <span className="num-tag">
               03
             </span>
             <span className="h-px w-12 bg-[color:var(--color-line)]" />
@@ -76,24 +76,24 @@ export default function Skills() {
           </Reveal>
         </div>
 
-        <Reveal delay={180}>
+        <Reveal delay={180} direction="blur" duration={1000}>
           <DailyDrivers />
         </Reveal>
 
         <div className="mt-8 grid gap-3 lg:grid-cols-3 lg:gap-4">
-          <Reveal delay={60} className="lg:col-span-2">
+          <Reveal delay={60} direction="scale" duration={900} className="lg:col-span-2">
             <Card group={frontend} hero />
           </Reveal>
-          <Reveal delay={140}>
+          <Reveal delay={140} direction="left" duration={900}>
             <Card group={backend} />
           </Reveal>
-          <Reveal delay={220}>
+          <Reveal delay={220} direction="left" duration={900}>
             <Card group={ai} />
           </Reveal>
-          <Reveal delay={300}>
+          <Reveal delay={300} direction="right" duration={900}>
             <Card group={storage} />
           </Reveal>
-          <Reveal delay={380}>
+          <Reveal delay={380} direction="right" duration={900}>
             <Card group={devops} />
           </Reveal>
         </div>
@@ -110,20 +110,20 @@ function DailyDrivers() {
     { label: "Ship", value: "Docker · AWS · Vercel" },
   ];
   return (
-    <div className="mt-10 flex flex-wrap items-stretch gap-px overflow-hidden rounded-2xl border border-[color:var(--color-line)] bg-[color:var(--color-line)]">
+    <div className="mt-10 flex flex-col items-stretch gap-px overflow-hidden rounded-2xl border border-[color:var(--color-line)] bg-[color:var(--color-line)] sm:flex-row sm:flex-wrap">
       <div className="flex items-center gap-3 bg-[color:var(--color-card)] px-5 py-4">
         <span className="relative flex h-2 w-2">
           <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[color:var(--color-accent)] opacity-60" />
           <span className="relative inline-flex h-2 w-2 rounded-full bg-[color:var(--color-accent)]" />
         </span>
-        <span className="num-tag text-[color:var(--color-accent-ink)]">
+        <span className="num-tag">
           daily drivers
         </span>
       </div>
       {stack.map((s) => (
         <div
           key={s.label}
-          className="flex flex-1 min-w-[180px] flex-col gap-1 bg-[color:var(--color-card)] px-5 py-4"
+          className="flex flex-col gap-1 bg-[color:var(--color-card)] px-5 py-4 sm:flex-1 sm:min-w-[160px]"
         >
           <span className="num-tag">{s.label}</span>
           <span className="text-sm tracking-tight text-[color:var(--color-fg)] sm:text-[15px]">
@@ -161,7 +161,7 @@ function Card({ group, hero = false }: { group: SkillGroup; hero?: boolean }) {
           <Glyph kind={meta.glyph} large={hero} />
           <div>
             <div className="flex items-baseline gap-3">
-              <span className="num-tag text-[color:var(--color-accent-ink)]">
+              <span className="num-tag">
                 {group.number}
               </span>
               <h3

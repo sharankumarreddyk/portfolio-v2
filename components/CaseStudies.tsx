@@ -3,6 +3,7 @@
 import { caseStudies, type CaseStudy } from "@/lib/case-studies";
 import Reveal from "./Reveal";
 import CaseCover from "./CaseCover";
+import ThresholdSlider from "./ThresholdSlider";
 
 export default function CaseStudies() {
   return (
@@ -13,7 +14,7 @@ export default function CaseStudies() {
       <div className="mx-auto max-w-[1500px] px-6 sm:px-10">
         <Reveal>
           <div className="flex items-center gap-4">
-            <span className="num-tag text-[color:var(--color-accent-ink)]">
+            <span className="num-tag">
               01
             </span>
             <span className="h-px w-12 bg-[color:var(--color-line)]" />
@@ -27,7 +28,7 @@ export default function CaseStudies() {
             style={{ fontSize: "clamp(2.2rem, 5vw, 4rem)" }}
           >
             Three real systems I built — problem, approach,{" "}
-            <span className="text-[color:var(--color-accent-ink)]">
+            <span className="text-[color:var(--color-fg)]">
               what shipped.
             </span>
           </h2>
@@ -35,7 +36,12 @@ export default function CaseStudies() {
 
         <div className="mt-16 flex flex-col gap-20 sm:gap-28">
           {caseStudies.map((cs, i) => (
-            <Reveal key={cs.slug} delay={i * 80}>
+            <Reveal
+              key={cs.slug}
+              delay={60}
+              direction={i % 2 === 0 ? "left" : "right"}
+              duration={1100}
+            >
               <CaseStudyBlock cs={cs} index={i} />
             </Reveal>
           ))}
@@ -51,7 +57,7 @@ function CaseStudyBlock({ cs, index }: { cs: CaseStudy; index: number }) {
     <article className="relative grid gap-10 lg:grid-cols-2 lg:gap-16">
       <div className={`flex flex-col gap-6 ${flip ? "lg:order-2" : ""}`}>
         <div className="flex flex-wrap items-baseline gap-3">
-          <span className="num-tag text-[color:var(--color-accent-ink)]">
+          <span className="num-tag">
             0{index + 1} / 03
           </span>
           <span className="num-tag">{cs.client.toLowerCase()}</span>
@@ -102,7 +108,7 @@ function CaseStudyBlock({ cs, index }: { cs: CaseStudy; index: number }) {
 
         {cs.tradeoff ? (
           <div className="border-l-2 border-[color:var(--color-accent)] pl-5">
-            <div className="num-tag text-[color:var(--color-accent-ink)]">
+            <div className="num-tag">
               result
             </div>
             <p className="mt-2 text-base leading-relaxed text-[color:var(--color-fg)]">
@@ -110,6 +116,8 @@ function CaseStudyBlock({ cs, index }: { cs: CaseStudy; index: number }) {
             </p>
           </div>
         ) : null}
+
+        {cs.slug === "jahopp-ai" ? <ThresholdSlider /> : null}
 
         <div className="flex flex-wrap items-center gap-3 pt-2">
           <ul className="flex flex-wrap gap-1.5">
@@ -148,9 +156,7 @@ function CaseStudyBlock({ cs, index }: { cs: CaseStudy; index: number }) {
 function Block({ label, body }: { label: string; body: string }) {
   return (
     <div>
-      <div className="num-tag mb-2 text-[color:var(--color-accent-ink)]">
-        {label}
-      </div>
+      <div className="num-tag mb-2">{label}</div>
       <p className="text-sm leading-relaxed text-[color:var(--color-muted)]">
         {body}
       </p>

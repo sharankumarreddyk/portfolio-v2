@@ -7,9 +7,12 @@ import {
 } from "next/font/google";
 import "./globals.css";
 import SmoothScroll from "@/components/SmoothScroll";
-import Cursor from "@/components/Cursor";
 import Loader from "@/components/Loader";
 import CommandPalette from "@/components/CommandPalette";
+import ScrollProgress from "@/components/ScrollProgress";
+import SectionDrift from "@/components/SectionDrift";
+import EasterEgg from "@/components/EasterEgg";
+import KeyboardShortcuts from "@/components/KeyboardShortcuts";
 import { profile } from "@/lib/data";
 
 const inter = Inter({
@@ -134,7 +137,10 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
         />
         <Loader />
-        <Cursor />
+        <ScrollProgress />
+        <SectionDrift />
+        <EasterEgg />
+        <KeyboardShortcuts />
         <CommandPalette />
         <SmoothScroll>{children}</SmoothScroll>
       </body>

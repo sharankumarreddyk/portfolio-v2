@@ -41,7 +41,7 @@ export default function Contact() {
 
       <div className="mx-auto max-w-[1600px] px-6 sm:px-10">
         <div className="mb-12 flex items-center gap-4">
-          <span className="num-tag text-[color:var(--color-accent-ink)]">06</span>
+          <span className="num-tag">06</span>
           <span className="h-px w-12 bg-[color:var(--color-line)]" />
           <span className="num-tag">contact</span>
         </div>
@@ -56,11 +56,11 @@ export default function Contact() {
           className="group block"
         >
           <Reveal delay={120}>
-            <h2 className="display inline-flex items-center gap-6 text-balance text-[13vw] leading-[0.9] sm:text-[9.5vw] lg:text-[7.6vw]">
+            <h2 className="display inline-flex flex-wrap items-center gap-3 text-balance text-[12vw] leading-[0.9] sm:gap-6 sm:text-[9.5vw] lg:text-[7.6vw]">
               <span>Let&rsquo;s talk</span>
               <span
                 aria-hidden
-                className="inline-flex h-[0.9em] w-[0.9em] shrink-0 items-center justify-center overflow-hidden rounded-full bg-[color:var(--color-accent)] text-black transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-110"
+                className="inline-flex h-[0.85em] w-[0.85em] shrink-0 items-center justify-center overflow-hidden rounded-full bg-[color:var(--color-accent)] text-black transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-110 sm:h-[0.9em] sm:w-[0.9em]"
               >
                 <svg
                   className="h-[0.34em] w-[0.34em] transition-transform duration-500 ease-out group-hover:translate-x-[0.06em] group-hover:-translate-y-[0.06em]"
@@ -82,7 +82,7 @@ export default function Contact() {
           <div className="mt-6 flex flex-wrap items-center gap-3">
             <a
               href={`mailto:${profile.email}`}
-              className="text-2xl text-[color:var(--color-muted)] underline decoration-[color:var(--color-dim)] underline-offset-[10px] transition-colors hover:text-[color:var(--color-accent-ink)] hover:decoration-[color:var(--color-accent)] sm:text-3xl"
+              className="break-all text-base text-[color:var(--color-muted)] underline decoration-[color:var(--color-dim)] underline-offset-[8px] transition-colors hover:text-[color:var(--color-accent-ink)] hover:decoration-[color:var(--color-accent)] sm:text-2xl sm:underline-offset-[10px] lg:text-3xl"
             >
               {profile.email}
             </a>

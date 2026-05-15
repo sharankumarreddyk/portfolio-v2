@@ -16,23 +16,12 @@ export default function CaseCover({ kind }: { kind: Kind }) {
 
 function BrowserFrame({
   children,
-  domain = "app.jahopp.com",
 }: {
   children: React.ReactNode;
   domain?: string;
 }) {
   return (
     <div className="absolute inset-0 flex flex-col bg-[#0d0d0d]">
-      <div className="flex items-center gap-2 border-b border-white/[0.06] px-4 py-2.5">
-        <div className="flex gap-1.5">
-          <span className="h-2.5 w-2.5 rounded-full bg-white/15" />
-          <span className="h-2.5 w-2.5 rounded-full bg-white/15" />
-          <span className="h-2.5 w-2.5 rounded-full bg-white/15" />
-        </div>
-        <div className="ml-3 flex-1 rounded-md bg-white/[0.04] px-3 py-1 text-[10px] text-white/40">
-          {domain}
-        </div>
-      </div>
       <div className="relative flex-1 overflow-hidden">{children}</div>
     </div>
   );

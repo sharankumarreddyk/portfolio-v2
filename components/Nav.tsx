@@ -134,37 +134,88 @@ export default function Nav() {
       </header>
 
       <div
-        className={`fixed inset-0 z-[140] flex flex-col bg-[color:var(--color-bg)] px-6 pt-24 transition-[clip-path] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] md:hidden ${
+        className={`fixed inset-0 z-[140] flex flex-col overflow-hidden bg-[color:var(--color-bg)] transition-[clip-path] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] md:hidden ${
           open ? "" : "pointer-events-none"
         }`}
         style={{
           clipPath: open ? "inset(0 0 0 0)" : "inset(0 0 100% 0)",
         }}
       >
-        <nav className="flex flex-col gap-1">
-          {navLinks.slice(1).map((link, i) => (
-            <a
-              key={link.href}
-              href={link.href}
-              onClick={() => setOpen(false)}
-              className="group flex items-baseline gap-4 border-b border-[color:var(--color-line)] py-5"
-              style={{
-                transitionDelay: open ? `${i * 60 + 200}ms` : "0ms",
-              }}
-            >
-              <span className="num-tag">{link.number}</span>
-              <span className="display text-4xl">{link.label}</span>
-            </a>
-          ))}
-        </nav>
-        <div className="mt-auto py-8 text-[color:var(--color-muted)]">
-          <div className="num-tag mb-2">say hi</div>
-          <a
-            href={`mailto:${profile.email}`}
-            className="display text-2xl text-[color:var(--color-fg)]"
+        <div
+          aria-hidden
+          className="grid-bg pointer-events-none absolute inset-0 -z-10 opacity-30"
+        />
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -right-32 -top-20 -z-10 h-[420px] w-[420px] rounded-full opacity-[0.10] blur-[120px]"
+          style={{ background: "var(--color-accent)" }}
+        />
+
+        <div className="flex h-full flex-col px-6 pb-10 pt-24 sm:px-8">
+          <div className="mb-8 flex items-center gap-3 text-[color:var(--color-muted)]">
+            <span className="relative flex h-2 w-2">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[color:var(--color-accent)] opacity-60" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-[color:var(--color-accent)]" />
+            </span>
+            <span className="num-tag">menu · {navLinks.length - 1} sections</span>
+          </div>
+
+          <nav className="flex flex-col">
+            {navLinks.slice(1).map((link, i) => (
+              <a
+                key={link.href}
+                href={link.href}
+                onClick={() => setOpen(false)}
+                className="group flex items-baseline gap-4 border-b border-[color:var(--color-line)] py-4"
+                style={{
+                  opacity: open ? 1 : 0,
+                  transform: open ? "translateX(0)" : "translateX(-24px)",
+                  transition: open
+                    ? `opacity 0.5s cubic-bezier(0.22,1,0.36,1) ${i * 60 + 200}ms, transform 0.6s cubic-bezier(0.22,1,0.36,1) ${i * 60 + 200}ms`
+                    : "opacity 0.2s, transform 0.2s",
+                }}
+              >
+                <span className="num-tag w-7 shrink-0">{link.number}</span>
+                <span
+                  className="display leading-[0.95]"
+                  style={{ fontSize: "clamp(2.4rem, 12vw, 4.5rem)" }}
+                >
+                  {link.label}
+                </span>
+                <span
+                  aria-hidden
+                  className="ml-auto translate-x-[-8px] text-[color:var(--color-muted)] opacity-0 transition-[opacity,transform] duration-300 group-hover:translate-x-0 group-hover:opacity-100"
+                >
+                  →
+                </span>
+              </a>
+            ))}
+          </nav>
+
+          <div
+            className="mt-auto flex flex-col gap-3"
+            style={{
+              opacity: open ? 1 : 0,
+              transform: open ? "translateY(0)" : "translateY(12px)",
+              transition: open
+                ? `opacity 0.5s ease ${navLinks.length * 60 + 200}ms, transform 0.5s cubic-bezier(0.22,1,0.36,1) ${navLinks.length * 60 + 200}ms`
+                : "opacity 0.2s, transform 0.2s",
+            }}
           >
-            {profile.email}
-          </a>
+            <div className="num-tag">say hi</div>
+            <a
+              href={`mailto:${profile.email}?subject=Hi%20from%20sharan.dev`}
+              onClick={() => setOpen(false)}
+              className="display break-all text-xl text-[color:var(--color-fg)] sm:text-2xl"
+            >
+              {profile.email}
+            </a>
+            <div className="mt-4 flex items-center gap-3 text-xs text-[color:var(--color-muted)]">
+              <span className="num-tag">bengaluru</span>
+              <span>·</span>
+              <span className="num-tag">utc +5:30</span>
+            </div>
+          </div>
         </div>
       </div>
     </>

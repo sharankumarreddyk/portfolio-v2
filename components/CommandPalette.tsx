@@ -1,16 +1,22 @@
 "use client";
 
 import { useEffect, useRef, useState, useCallback } from "react";
-import { navLinks, profile } from "@/lib/data";
+import { navLinks, profile, projects, skillGroups } from "@/lib/data";
+import { caseStudies } from "@/lib/case-studies";
 
 type Action = {
   id: string;
   label: string;
   hint?: string;
   keywords?: string[];
-  group: "navigate" | "act" | "open" | "theme";
+  group: "navigate" | "case" | "project" | "skill" | "act" | "open" | "theme";
   run: () => void;
 };
+
+function scrollToId(id: string) {
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+}
 
 export default function CommandPalette() {
   const [open, setOpen] = useState(false);
@@ -51,12 +57,51 @@ export default function CommandPalette() {
       hint: l.number,
       keywords: ["section", l.label.toLowerCase()],
       group: "navigate" as const,
+      run: () => scrollToId(l.href.replace("#", "")),
+    })),
+    ...caseStudies.map((cs) => ({
+      id: `case-${cs.slug}`,
+      label: `Case study · ${cs.client}`,
+      hint: cs.title,
+      keywords: [
+        "case",
+        "study",
+        cs.slug,
+        cs.client.toLowerCase(),
+        ...cs.stack.map((s) => s.toLowerCase()),
+      ],
+      group: "case" as const,
+      run: () => scrollToId("work"),
+    })),
+    ...projects.map((p) => ({
+      id: `project-${p.name}`,
+      label: `Project · ${p.name}`,
+      hint: p.tags.slice(0, 2).join(" · "),
+      keywords: [
+        "project",
+        p.name.toLowerCase(),
+        ...p.tags.map((t) => t.toLowerCase()),
+      ],
+      group: "project" as const,
       run: () => {
-        const id = l.href.replace("#", "");
-        const el = document.getElementById(id);
-        if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+        scrollToId("projects");
+        setTimeout(() => window.open(p.url, "_blank", "noopener"), 200);
       },
     })),
+    ...skillGroups.flatMap((g) =>
+      g.items.map((item) => ({
+        id: `skill-${g.label}-${item}`,
+        label: `Skill · ${item}`,
+        hint: g.label.toLowerCase(),
+        keywords: [
+          "skill",
+          item.toLowerCase(),
+          g.label.toLowerCase(),
+        ],
+        group: "skill" as const,
+        run: () => scrollToId("skills"),
+      }))
+    ),
     {
       id: "act-copy-email",
       label: "Copy email address",

@@ -191,6 +191,7 @@ export const experiences: Experience[] = [
 export type Project = {
   name: string;
   description: string;
+  why?: string;
   tags: string[];
   url: string;
   cover:
@@ -209,6 +210,7 @@ export const projects: Project[] = [
     name: "RestaurantOS",
     description:
       "Full-stack restaurant management system — orders, menu, kitchen, billing. Dockerised for one-command deploys.",
+    why: "Because every off-the-shelf POS I tried felt like a 2012 wedding website.",
     tags: ["JavaScript", "Node.js", "Docker"],
     url: "https://github.com/sharankumarreddyk/RestaurantOS",
     cover: "restaurantos",
@@ -217,6 +219,7 @@ export const projects: Project[] = [
     name: "AI-Skills",
     description:
       "Personal lab for AI experiments — TypeScript & Python prototypes exploring agentic workflows and tooling patterns.",
+    why: "A sandbox to fail in. Most of these never shipped — which is the point.",
     tags: ["Python", "TypeScript", "AI"],
     url: "https://github.com/sharankumarreddyk/AI-Skills",
     cover: "aiskills",
@@ -225,6 +228,7 @@ export const projects: Project[] = [
     name: "College-ERP",
     description:
       "End-to-end ERP for a college — students, faculty, attendance, results. JavaScript across the stack.",
+    why: "Built during BCA. Taught me more about state management than any tutorial.",
     tags: ["JavaScript", "Full-stack"],
     url: "https://github.com/sharankumarreddyk/College-ERP",
     cover: "collegeerp",
@@ -233,6 +237,7 @@ export const projects: Project[] = [
     name: "Gym-website",
     description:
       "Marketing site for a fitness brand — Svelte + Tailwind & DaisyUI, with route-based sections, dark-mode toggle, and component primitives in a SvelteKit project.",
+    why: "An excuse to try Svelte properly. Spoiler: faster to write than React.",
     tags: ["Svelte", "SvelteKit", "Tailwind", "DaisyUI"],
     url: "https://github.com/sharankumarreddyk/Gym-website",
     cover: "gym",

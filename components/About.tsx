@@ -37,79 +37,79 @@ export default function About({ github }: { github: GitHubLiveData }) {
       id="about"
       className="relative border-t border-[color:var(--color-line)] py-20 sm:py-28"
     >
-      <div className="mx-auto grid max-w-[1500px] items-center gap-12 px-6 sm:px-10 lg:grid-cols-[auto_1fr] lg:gap-16">
-        <div className="flex flex-col gap-6">
+      <div className="mx-auto max-w-[1500px] px-6 sm:px-10">
+        <Reveal>
           <div className="flex items-center gap-4">
-            <span className="num-tag text-[color:var(--color-accent-ink)]">
-              05
-            </span>
+            <span className="num-tag">05</span>
             <span className="h-px w-12 bg-[color:var(--color-line)]" />
             <span className="num-tag">about</span>
           </div>
+        </Reveal>
 
-          <Monogram />
-        </div>
+        {/* Horizontal split: monogram on left, bio on right, vertical rule between */}
+        <div className="mt-10 grid gap-10 lg:grid-cols-[auto_1fr] lg:gap-0">
+          <div className="lg:pr-12">
+            <Monogram />
+          </div>
 
-        <div className="flex flex-col gap-7">
-          <Reveal>
-            <p
-              className="serif text-balance leading-[1.15] text-[color:var(--color-fg)]"
-              style={{ fontSize: "clamp(1.6rem, 3.4vw, 2.6rem)" }}
-            >
-              I came to software a little late. Commerce kid first —{" "}
-              <span className="not-italic font-[var(--font-display)] text-[color:var(--color-accent-ink)]">
-                pivoted to code
-              </span>{" "}
-              somewhere between Master Minds and MS Ramaiah, taught myself
-              the rest in the gaps between classes.
-            </p>
-          </Reveal>
-
-          <Reveal delay={120}>
-            <p className="max-w-2xl text-base leading-relaxed text-[color:var(--color-muted)] sm:text-lg">
-              Now I work at {profile.company} — a Swedish product company
-              with a Bangalore office. Day to day, I&rsquo;m in TypeScript
-              (web), Python (AI services), and SQL (everywhere it leaks).
-              The work spans an AI learning platform, startup-ecosystem
-              analytics, e-commerce returns, sustainability APIs. I like
-              writing the unglamorous code that makes the demo possible.
-            </p>
-          </Reveal>
-
-          <Reveal delay={200}>
-            <p className="max-w-2xl text-base leading-relaxed text-[color:var(--color-muted)] sm:text-lg">
-              On weekends I build small things to learn — most recently{" "}
-              <a
-                href="https://github.com/sharankumarreddyk/kubeai-ops"
-                target="_blank"
-                rel="noreferrer"
-                className="text-[color:var(--color-fg)] underline decoration-[color:var(--color-dim)] underline-offset-[5px] transition-colors hover:decoration-[color:var(--color-accent)]"
+          <div className="flex flex-col gap-7 lg:border-l lg:border-[color:var(--color-line)] lg:pl-12">
+            <Reveal direction="right" duration={1100}>
+              <p
+                className="serif text-balance leading-[1.15] text-[color:var(--color-fg)]"
+                style={{ fontSize: "clamp(1.5rem, 3.2vw, 2.4rem)" }}
               >
-                kubeai-ops
-              </a>
-              , an open-source incident-response loop for Kubernetes that
-              started as a weekend rabbit hole.
-            </p>
-          </Reveal>
+                I came to software a little late. Commerce kid first —
+                pivoted to code somewhere between Master Minds and MS Ramaiah,
+                taught myself the rest in the gaps between classes.
+              </p>
+            </Reveal>
 
-          <Reveal delay={260}>
-            <p className="serif max-w-2xl text-base leading-relaxed text-[color:var(--color-fg)] sm:text-lg">
-              Not job-hunting right now — but always curious about hard
-              product problems and the people building them.
-            </p>
-          </Reveal>
+            <Reveal delay={120}>
+              <p className="max-w-2xl text-base leading-relaxed text-[color:var(--color-muted)] sm:text-lg">
+                Now I work at {profile.company} — a Swedish product company
+                with a Bangalore office. Day to day, I&rsquo;m in TypeScript
+                (web), Python (AI services), and SQL (everywhere it leaks).
+                I like writing the unglamorous code that makes the demo
+                possible.
+              </p>
+            </Reveal>
 
-          <Reveal delay={300}>
-            <div className="grid grid-cols-3 gap-6 border-t border-[color:var(--color-line)] pt-6">
-              <Stat k="2024" v="shipping at indpro since" />
-              <Stat
-                k={deployTime}
-                v="latest commit"
-                hydrationSafe
-              />
-              <Stat k="BLR" v="utc +5:30" />
-            </div>
-          </Reveal>
+            <Reveal delay={200}>
+              <p className="max-w-2xl text-base leading-relaxed text-[color:var(--color-muted)] sm:text-lg">
+                On weekends I build small things to learn — most recently{" "}
+                <a
+                  href="https://github.com/sharankumarreddyk/kubeai-ops"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-[color:var(--color-fg)] underline decoration-[color:var(--color-line)] underline-offset-[5px] transition-colors hover:decoration-[color:var(--color-accent)]"
+                >
+                  kubeai-ops
+                </a>
+                , an open-source incident-response loop for Kubernetes that
+                started as a weekend rabbit hole.
+              </p>
+            </Reveal>
+
+            <Reveal delay={260}>
+              <p className="serif max-w-2xl text-base leading-relaxed text-[color:var(--color-muted)] sm:text-lg">
+                Not job-hunting right now — but always curious about hard
+                product problems and the people building them.
+              </p>
+            </Reveal>
+
+            {/* Editorial stats — no card, just rule-divided inline data */}
+            <Reveal delay={320}>
+              <div className="mt-2 grid grid-cols-1 gap-px overflow-hidden border-y border-[color:var(--color-line)] bg-[color:var(--color-line)] xs:grid-cols-3 sm:grid-cols-3">
+                <Stat k="2024" v="shipping at indpro since" />
+                <Stat
+                  k={deployTime}
+                  v="latest commit"
+                  hydrationSafe
+                />
+                <Stat k="BLR" v="utc +5:30" />
+              </div>
+            </Reveal>
+          </div>
         </div>
       </div>
     </section>
@@ -126,9 +126,9 @@ function Stat({
   hydrationSafe?: boolean;
 }) {
   return (
-    <div>
+    <div className="bg-[color:var(--color-bg)] px-5 py-5 sm:px-6 sm:py-6">
       <div
-        className="display text-2xl sm:text-3xl"
+        className="display text-2xl text-[color:var(--color-fg)] sm:text-3xl"
         suppressHydrationWarning={hydrationSafe}
       >
         {k}
@@ -142,8 +142,7 @@ function Monogram() {
   return (
     <Reveal>
       <div
-        data-cursor="hover"
-        className="group relative aspect-square w-[260px] shrink-0 overflow-hidden rounded-full border border-[color:var(--color-line)] bg-[color:var(--color-card)] sm:w-[300px]"
+        className="group relative mx-auto aspect-square w-[80vw] max-w-[260px] shrink-0 overflow-hidden rounded-full border border-[color:var(--color-line)] bg-[color:var(--color-card)] sm:mx-0 sm:w-[280px] sm:max-w-none lg:w-[300px]"
       >
         <div
           aria-hidden
@@ -197,7 +196,7 @@ function Monogram() {
         <div className="absolute inset-0 grid place-items-center">
           <div className="display text-[88px] leading-none text-[color:var(--color-fg)] transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-110 sm:text-[100px]">
             <span>S</span>
-            <span className="text-[color:var(--color-accent-ink)]">K</span>
+            <span className="text-[color:var(--color-accent)]">K</span>
             <span>R</span>
           </div>
         </div>

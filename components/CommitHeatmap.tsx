@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import type { Week } from "@/lib/github-data";
 import CountUp from "./CountUp";
 
@@ -38,16 +38,50 @@ const MONTH_LABELS = [
 export default function CommitHeatmap({
   weeks,
   totalContributions,
+  variant = "default",
 }: {
   weeks: Week[];
   totalContributions: number;
+  variant?: "default" | "signature";
 }) {
+  const signature = variant === "signature";
+  const cell = signature ? "h-3.5 w-3.5 sm:h-4 sm:w-4" : "h-3 w-3";
+  const gap = signature ? "gap-[4px]" : "gap-[3px]";
+
   const [hover, setHover] = useState<{
     c: number;
     d: string;
     x: number;
     y: number;
   } | null>(null);
+
+  const trackRef = useRef<HTMLDivElement>(null);
+  const [drawn, setDrawn] = useState(false);
+
+  useEffect(() => {
+    const el = trackRef.current;
+    if (!el) return;
+    const prefersReduced = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+    if (prefersReduced) {
+      setDrawn(true);
+      return;
+    }
+    const obs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            setDrawn(true);
+            obs.disconnect();
+          }
+        });
+      },
+      { threshold: 0.15 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
 
   const monthMarks = useMemo(() => {
     const seen = new Set<number>();
@@ -70,73 +104,86 @@ export default function CommitHeatmap({
 
   return (
     <div className="relative">
-      <div className="mb-3 flex items-end justify-between gap-4 text-[color:var(--color-muted)]">
-        <div>
-          <div className="num-tag">contribution graph · 12 months</div>
-          <div className="display mt-2 text-2xl text-[color:var(--color-fg)] sm:text-3xl">
-            <CountUp value={totalContributions} />{" "}
-            <span className="text-[color:var(--color-muted)]">
-              contributions
-            </span>
+      {!signature ? (
+        <div className="mb-3 flex items-end justify-between gap-4 text-[color:var(--color-muted)]">
+          <div>
+            <div className="num-tag">contribution graph · 12 months</div>
+            <div className="display mt-2 text-2xl text-[color:var(--color-fg)] sm:text-3xl">
+              <CountUp value={totalContributions} />{" "}
+              <span className="text-[color:var(--color-muted)]">
+                contributions
+              </span>
+            </div>
           </div>
+          <Legend />
         </div>
-        <div className="hidden items-center gap-2 sm:flex">
-          <span className="text-[10px] tracking-widest">LESS</span>
-          {SCALE.map((c, i) => (
-            <span
-              key={i}
-              className="h-3 w-3 rounded-[2px]"
-              style={{ background: c }}
-            />
-          ))}
-          <span className="text-[10px] tracking-widest">MORE</span>
-        </div>
-      </div>
+      ) : null}
 
       <div
+        ref={trackRef}
         className="relative overflow-x-auto pb-2"
         onMouseLeave={() => setHover(null)}
+        style={
+          signature
+            ? {
+                maskImage:
+                  "linear-gradient(to right, black 0%, black 92%, transparent 100%)",
+                WebkitMaskImage:
+                  "linear-gradient(to right, black 0%, black 92%, transparent 100%)",
+              }
+            : undefined
+        }
       >
-        <div className="relative inline-flex select-none gap-[3px]">
-          {weeks.map((w, wi) => (
-            <div
-              key={wi}
-              className="flex flex-col gap-[3px]"
-            >
-              {w.d.map((d, di) => {
-                const lvl = levelFor(d.c);
-                return (
-                  <button
-                    key={`${wi}-${di}`}
-                    type="button"
-                    aria-label={`${d.c} contributions on ${d.d}`}
-                    onMouseEnter={(e) => {
-                      const r = (
-                        e.currentTarget as HTMLButtonElement
-                      ).getBoundingClientRect();
-                      setHover({
-                        c: d.c,
-                        d: d.d,
-                        x: r.left + r.width / 2,
-                        y: r.top,
-                      });
-                    }}
-                    className="h-3 w-3 rounded-[2px] transition-transform duration-150 hover:scale-[1.4]"
-                    style={{ background: SCALE[lvl] }}
-                  />
-                );
-              })}
-            </div>
-          ))}
+        <div className={`relative inline-flex select-none ${gap}`}>
+          {weeks.map((w, wi) => {
+            const colDelay = wi * (signature ? 22 : 14);
+            return (
+              <div key={wi} className={`flex flex-col ${gap}`}>
+                {w.d.map((d, di) => {
+                  const lvl = levelFor(d.c);
+                  const cellDelay = colDelay + di * 6;
+                  return (
+                    <button
+                      key={`${wi}-${di}`}
+                      type="button"
+                      aria-label={`${d.c} contributions on ${d.d}`}
+                      onMouseEnter={(e) => {
+                        const r = (
+                          e.currentTarget as HTMLButtonElement
+                        ).getBoundingClientRect();
+                        setHover({
+                          c: d.c,
+                          d: d.d,
+                          x: r.left + r.width / 2,
+                          y: r.top,
+                        });
+                      }}
+                      className={`${cell} rounded-[2px] transition-transform duration-150 ease-out hover:scale-[1.4]`}
+                      style={
+                        drawn
+                          ? { background: SCALE[lvl] }
+                          : {
+                              background: SCALE[lvl],
+                              opacity: 0,
+                              transform: "scale(0.3)",
+                              transition: `opacity 320ms cubic-bezier(0.22,1,0.36,1) ${cellDelay}ms, transform 420ms cubic-bezier(0.16,1,0.3,1) ${cellDelay}ms`,
+                            }
+                      }
+                    />
+                  );
+                })}
+              </div>
+            );
+          })}
         </div>
 
-        <div className="mt-2 flex gap-[3px]">
+        <div className={`mt-2 flex ${gap}`}>
           {weeks.map((_, wi) => {
             const mark = monthMarks[wi];
             return (
               <div
                 key={wi}
-                className="w-3 text-[10px] uppercase tracking-widest text-[color:var(--color-muted)]"
+                className={`${signature ? "w-3.5 sm:w-4" : "w-3"} text-[10px] uppercase tracking-widest text-[color:var(--color-muted)]`}
               >
                 {mark ? MONTH_LABELS[mark.m] : ""}
               </div>
@@ -145,13 +192,19 @@ export default function CommitHeatmap({
         </div>
       </div>
 
+      {signature ? (
+        <div className="mt-4 hidden items-center justify-end sm:flex">
+          <Legend />
+        </div>
+      ) : null}
+
       {hover ? (
         <div
           aria-hidden
           className="pointer-events-none fixed z-[180] -translate-x-1/2 -translate-y-full rounded-md border border-[color:var(--color-line)] bg-[color:var(--color-card)] px-2.5 py-1.5 text-[11px] shadow-xl"
           style={{ left: hover.x, top: hover.y - 6 }}
         >
-          <span className="font-mono text-[color:var(--color-accent-ink)]">
+          <span className="font-mono text-[color:var(--color-fg)]">
             {hover.c}
           </span>{" "}
           contributions on{" "}
@@ -168,6 +221,22 @@ export default function CommitHeatmap({
       <div className="sr-only">
         {totalContributions} contributions over the last {totalDays} days.
       </div>
+    </div>
+  );
+}
+
+function Legend() {
+  return (
+    <div className="flex items-center gap-2 text-[color:var(--color-muted)]">
+      <span className="text-[10px] tracking-widest">LESS</span>
+      {SCALE.map((c, i) => (
+        <span
+          key={i}
+          className="h-3 w-3 rounded-[2px]"
+          style={{ background: c }}
+        />
+      ))}
+      <span className="text-[10px] tracking-widest">MORE</span>
     </div>
   );
 }

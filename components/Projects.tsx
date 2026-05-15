@@ -13,7 +13,7 @@ export default function Projects() {
       <div className="mx-auto max-w-[1500px] px-6 sm:px-10">
         <Reveal>
           <div className="flex items-center gap-4">
-            <span className="num-tag text-[color:var(--color-accent-ink)]">
+            <span className="num-tag">
               02
             </span>
             <span className="h-px w-12 bg-[color:var(--color-line)]" />
@@ -28,7 +28,7 @@ export default function Projects() {
               style={{ fontSize: "clamp(1.9rem, 4.4vw, 3.4rem)" }}
             >
               Built on{" "}
-              <span className="text-[color:var(--color-accent-ink)]">
+              <span className="text-[color:var(--color-fg)]">
                 weekends.
               </span>
             </h2>
@@ -41,13 +41,12 @@ export default function Projects() {
 
         <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {projects.map((p, i) => (
-            <Reveal key={p.name} delay={i * 70}>
+            <Reveal key={p.name} delay={i * 90} direction="scale" duration={800}>
               <a
                 href={p.url}
                 target="_blank"
                 rel="noreferrer"
-                data-cursor="hover"
-                className="group relative flex h-full flex-col overflow-hidden rounded-xl border border-[color:var(--color-line)] bg-[color:var(--color-card)] transition-colors duration-500 hover:border-[color:var(--color-accent)]"
+                className="group relative flex h-full flex-col overflow-hidden rounded-xl border border-[color:var(--color-line)] bg-[color:var(--color-card)] transition-[border-color,transform,box-shadow] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1 hover:border-[color:var(--color-accent)] hover:shadow-[0_18px_40px_-18px_rgba(197,255,61,0.18)]"
               >
                 <div className="relative aspect-[5/4] overflow-hidden">
                   <div className="absolute inset-0 transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.06]">
@@ -81,6 +80,11 @@ export default function Projects() {
                   <p className="text-sm leading-relaxed text-[color:var(--color-muted)]">
                     {p.description}
                   </p>
+                  {p.why ? (
+                    <p className="serif text-[13px] leading-snug text-[color:var(--color-fg)]">
+                      &mdash; {p.why}
+                    </p>
+                  ) : null}
                   <ul className="mt-auto flex flex-wrap gap-1.5 pt-3">
                     {p.tags.map((t) => (
                       <li

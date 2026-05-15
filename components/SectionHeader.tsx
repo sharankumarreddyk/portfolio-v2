@@ -19,7 +19,7 @@ export default function SectionHeader({
     <div className="grid items-end gap-8 lg:grid-cols-[1fr_2fr]">
       <Reveal>
         <div className="flex items-center gap-4">
-          <span className="num-tag text-[color:var(--color-accent-ink)]">
+          <span className="num-tag">
             {number}
           </span>
           <span className="h-px w-12 bg-[color:var(--color-line)]" />

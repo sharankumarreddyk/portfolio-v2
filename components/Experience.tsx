@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { experiences, type Experience as ExperienceType } from "@/lib/data";
-import SectionHeader from "./SectionHeader";
 import Reveal from "./Reveal";
 
 function yearsMonths(iso: string): string {
@@ -20,14 +19,13 @@ function yearsMonths(iso: string): string {
 
 const TYPE_COLORS: Record<string, string> = {
   Intern: "var(--color-muted)",
-  Contract: "var(--color-accent-ink)",
+  Contract: "var(--color-fg)",
   "Full-time": "var(--color-accent)",
 };
 
 export default function Experience() {
   const first = experiences[0];
   const startISO = first.startISO ?? "2024-10-01";
-
   const [years, setYears] = useState<string>(() => yearsMonths(startISO));
 
   useEffect(() => {
@@ -39,43 +37,56 @@ export default function Experience() {
       id="experience"
       className="relative border-t border-[color:var(--color-line)] py-20 sm:py-28"
     >
-      <div className="mx-auto max-w-[1600px] px-6 sm:px-10">
-        <div className="grid items-end gap-6 lg:grid-cols-[1fr_auto]">
-          <SectionHeader
-            number="04"
-            eyebrow="experience"
-            title="A short story, written in commits."
-            description="From a commerce-foundation kid to a full-stack engineer shipping production code in TypeScript and Python every day. The arc, briefly."
-          />
-          <Reveal delay={200}>
-            <div className="rounded-2xl border border-[color:var(--color-line)] bg-[color:var(--color-card)] px-5 py-4">
+      <div className="mx-auto max-w-[1500px] px-6 sm:px-10">
+        {/* Editorial header — flat, no card */}
+        <div className="grid items-end gap-8 lg:grid-cols-[1fr_auto] lg:gap-12">
+          <Reveal>
+            <div>
+              <div className="flex items-center gap-4">
+                <span className="num-tag">04</span>
+                <span className="h-px w-12 bg-[color:var(--color-line)]" />
+                <span className="num-tag">experience</span>
+              </div>
+              <h2
+                className="display mt-6 text-balance leading-[0.95]"
+                style={{ fontSize: "clamp(2rem, 4.6vw, 3.6rem)" }}
+              >
+                A short story, written in commits.
+              </h2>
+              <p className="mt-4 max-w-2xl text-base leading-relaxed text-[color:var(--color-muted)] sm:text-lg">
+                From a commerce-foundation kid to a full-stack engineer
+                shipping production code every day. The arc, briefly.
+              </p>
+            </div>
+          </Reveal>
+          <Reveal delay={120}>
+            <div className="flex items-baseline gap-3">
               <div
-                className="display text-3xl leading-none text-[color:var(--color-fg)] sm:text-4xl"
+                className="display text-5xl leading-none text-[color:var(--color-fg)] sm:text-6xl"
                 suppressHydrationWarning
               >
                 {years}
               </div>
-              <div className="num-tag mt-2">in industry</div>
+              <div className="num-tag">in industry</div>
             </div>
           </Reveal>
         </div>
 
-        <div className="relative mt-14">
-          <div
-            aria-hidden
-            className="absolute left-3 top-2 h-[calc(100%-4rem)] w-px bg-[color:var(--color-line)] sm:left-4"
-          />
-
-          <ul className="flex flex-col gap-16">
-            {experiences.map((exp, i) => (
-              <Reveal key={exp.company + i} delay={i * 90}>
-                <li className="group relative grid gap-6 pl-12 sm:grid-cols-[180px_1fr] sm:pl-14">
-                  <span
-                    aria-hidden
-                    className="absolute left-0 top-2 grid h-7 w-7 place-items-center rounded-full border border-[color:var(--color-line)] bg-[color:var(--color-bg)] transition-colors group-hover:border-[color:var(--color-accent)] sm:h-8 sm:w-8"
-                  >
+        {/* Editorial timeline — flat, rule-line dividers, no cards */}
+        <div className="mt-16 border-t border-[color:var(--color-line)]">
+          {experiences.map((exp, i) => (
+            <Reveal
+              key={exp.company + i}
+              delay={i * 100}
+              direction="left"
+              duration={1000}
+            >
+              <article className="group grid gap-6 border-b border-[color:var(--color-line)] py-10 sm:grid-cols-[200px_1fr_auto] sm:gap-10 sm:py-12">
+                {/* Period column */}
+                <div className="flex flex-col gap-1.5">
+                  <div className="flex items-center gap-3">
                     <span
-                      className="h-2 w-2 rounded-full transition-colors"
+                      className="h-1.5 w-1.5 rounded-full"
                       style={{
                         background:
                           i === 0
@@ -83,59 +94,59 @@ export default function Experience() {
                             : "var(--color-dim)",
                       }}
                     />
-                  </span>
-
-                  <div className="flex flex-col gap-1">
                     <span className="num-tag">{exp.period}</span>
-                    {exp.location ? (
-                      <span className="text-xs text-[color:var(--color-muted)]">
-                        {exp.location}
-                      </span>
-                    ) : null}
                   </div>
+                  {exp.location ? (
+                    <span className="pl-5 text-xs text-[color:var(--color-muted)]">
+                      {exp.location}
+                    </span>
+                  ) : null}
+                </div>
 
+                {/* Body column */}
+                <div className="flex flex-col gap-5">
                   <div>
-                    <h3 className="display text-3xl sm:text-4xl">
+                    <h3
+                      className="display text-balance leading-[1.05]"
+                      style={{ fontSize: "clamp(1.6rem, 3vw, 2.4rem)" }}
+                    >
                       {exp.role}
                     </h3>
                     <div className="mt-1 text-base text-[color:var(--color-muted)]">
                       {exp.company}
                     </div>
-
-                    {exp.progression ? <Progression exp={exp} /> : null}
-
-                    <div className="mt-6 grid gap-6 lg:grid-cols-[1fr_220px]">
-                      {exp.points.length ? (
-                        <ul className="flex flex-col gap-2.5 text-[color:var(--color-muted)]">
-                          {exp.points.map((p, k) => (
-                            <li
-                              key={k}
-                              className="flex gap-3 text-sm leading-relaxed sm:text-base"
-                            >
-                              <span
-                                aria-hidden
-                                className="mt-2.5 h-px w-3 shrink-0 bg-[color:var(--color-accent)]"
-                              />
-                              {p}
-                            </li>
-                          ))}
-                        </ul>
-                      ) : null}
-
-                      <div className="flex shrink-0 lg:justify-end">
-                        <div className="rounded-2xl border border-[color:var(--color-line)] bg-[color:var(--color-card)] px-5 py-4">
-                          <div className="display text-3xl leading-none text-[color:var(--color-fg)] sm:text-4xl">
-                            {exp.stat.k}
-                          </div>
-                          <div className="num-tag mt-2">{exp.stat.v}</div>
-                        </div>
-                      </div>
-                    </div>
                   </div>
-                </li>
-              </Reveal>
-            ))}
-          </ul>
+
+                  {exp.progression ? <Progression exp={exp} /> : null}
+
+                  {exp.points.length ? (
+                    <ul className="flex flex-col gap-2.5">
+                      {exp.points.map((p, k) => (
+                        <li
+                          key={k}
+                          className="flex gap-3 text-sm leading-relaxed text-[color:var(--color-muted)] sm:text-base"
+                        >
+                          <span
+                            aria-hidden
+                            className="mt-2.5 h-px w-3 shrink-0 bg-[color:var(--color-line)]"
+                          />
+                          {p}
+                        </li>
+                      ))}
+                    </ul>
+                  ) : null}
+                </div>
+
+                {/* Stat column — editorial, anchored to top of row */}
+                <div className="border-t border-[color:var(--color-line)] pt-4 sm:self-start sm:border-l sm:border-t-0 sm:pl-6 sm:pt-0">
+                  <div className="display text-3xl leading-none text-[color:var(--color-fg)] sm:text-4xl">
+                    {exp.stat.k}
+                  </div>
+                  <div className="num-tag mt-2 max-w-[160px]">{exp.stat.v}</div>
+                </div>
+              </article>
+            </Reveal>
+          ))}
         </div>
       </div>
     </section>
@@ -145,10 +156,8 @@ export default function Experience() {
 function Progression({ exp }: { exp: ExperienceType }) {
   if (!exp.progression) return null;
   return (
-    <div className="mt-6 rounded-2xl border border-[color:var(--color-line)] bg-[color:var(--color-card)] p-5">
-      <div className="num-tag mb-4 text-[color:var(--color-accent-ink)]">
-        role progression
-      </div>
+    <div className="border-l border-[color:var(--color-line)] pl-5">
+      <div className="num-tag mb-4">role progression</div>
       <ol className="flex flex-col gap-3">
         {exp.progression.map((step, i) => {
           const color = TYPE_COLORS[step.type] ?? "var(--color-muted)";
