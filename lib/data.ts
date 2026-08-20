@@ -154,8 +154,13 @@ export const experiences: Experience[] = [
         type: "Contract",
       },
       {
-        period: "Jul '25 — Present",
+        period: "Jul '25 — Jun '26",
         title: "Junior Software Engineer",
+        type: "Full-time",
+      },
+      {
+        period: "Jul '26 — Present",
+        title: "Software Engineer",
         type: "Full-time",
         current: true,
       },

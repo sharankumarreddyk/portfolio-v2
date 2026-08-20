@@ -14,31 +14,41 @@ export type TopRepo = {
 };
 
 export const topRepos: TopRepo[] = [
-  { owner: "indpro-blr", name: "jahopp-ai", commits: 45, label: "AI service" },
   {
-    owner: "indpro-blr",
-    name: "jahopp-backend",
+    owner: "sharankumarreddyk",
+    name: "cluster-canary",
+    commits: 45,
+    label: "K8s failure ML",
+  },
+  {
+    owner: "sharankumarreddyk",
+    name: "openwrist",
     commits: 39,
-    label: "platform API",
+    label: "watch firmware",
   },
-  { owner: "sisp-sweden", name: "ssn-web", commits: 26, label: "analytics web" },
   {
-    owner: "sisp-sweden",
-    name: "ssn-database",
+    owner: "sharankumarreddyk",
+    name: "kubeai-ops",
+    commits: 26,
+    label: "AI incident response",
+  },
+  {
+    owner: "sharankumarreddyk",
+    name: "AI-Skills",
     commits: 21,
-    label: "data layer",
+    label: "AI experiments",
   },
   {
-    owner: "indpro-blr",
-    name: "jahopp-admin",
-    commits: 23,
-    label: "admin app",
-  },
-  {
-    owner: "sisp-sweden",
-    name: "ignite-magic-2.0",
+    owner: "sharankumarreddyk",
+    name: "RestaurantOS",
     commits: 20,
-    label: "matching",
+    label: "full-stack",
+  },
+  {
+    owner: "sharankumarreddyk",
+    name: "openwrist-ios",
+    commits: 18,
+    label: "companion app",
   },
 ];
 
@@ -51,28 +61,28 @@ export type RecentCommit = {
 export const recentCommits: RecentCommit[] = [
   {
     date: "2026-05-13T15:18:17+05:30",
-    repo: "indpro-blr/jahopp-ai",
-    msg: "fix: bump image-fetch timeout 30s → 90s to prevent lost images",
+    repo: "sharankumarreddyk/cluster-canary",
+    msg: "feat: leakage guard on rolling-window features before training",
   },
   {
     date: "2026-05-13T11:17:26+05:30",
-    repo: "indpro-blr/jahopp-backend",
-    msg: "feat: company status + auth hooks",
+    repo: "sharankumarreddyk/openwrist",
+    msg: "feat: ANCS notification source + caller ID parsing over BLE",
   },
   {
     date: "2026-05-12T17:52:37+05:30",
-    repo: "indpro-blr/jahopp-ai",
-    msg: "feat: switch image generation default to gpt-image-2",
+    repo: "sharankumarreddyk/cluster-canary",
+    msg: "perf: trim BentoML gRPC sidecar to p95 < 50ms",
   },
   {
     date: "2026-05-12T16:24:30+05:30",
-    repo: "indpro-blr/jahopp-ai",
-    msg: "feat: bypass quota gate on resume requests so in-progress courses complete",
+    repo: "sharankumarreddyk/openwrist",
+    msg: "feat: CTS time sync + AMS music control on the watch face",
   },
   {
     date: "2026-05-11T15:19:24+05:30",
-    repo: "indpro-blr/jahopp-backend",
-    msg: "feat: per-company AI token quota on user service",
+    repo: "sharankumarreddyk/kubeai-ops",
+    msg: "feat: RBAC-gated auto-remediation for known CrashLoop patterns",
   },
 ];
 
@@ -81,8 +91,8 @@ export const stats = {
   activeRepos: 7,
   productsShipped: 6,
   prsLast30d: 50,
-  languages: ["TypeScript", "Python", "JavaScript", "SQL"],
-  primaryOrg: "indpro-blr",
+  languages: ["TypeScript", "Python", "C", "SQL"],
+  primaryOrg: "sharankumarreddyk",
 };
 
 export const lastShipped = recentCommits[0];

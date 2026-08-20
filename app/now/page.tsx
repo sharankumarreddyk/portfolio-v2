@@ -12,7 +12,7 @@ export const revalidate = 3600;
 
 // Update this when you actually change the page content.
 // Used to render the "last updated" stamp.
-const LAST_UPDATED_ISO = "2026-05-15";
+const LAST_UPDATED_ISO = "2026-08-20";
 
 const CURRENT_BOOK = {
   title: "Designing Data-Intensive Applications",
@@ -26,8 +26,8 @@ const focus = [
   {
     label: "Shipping",
     items: [
-      "Jahopp AI — per-company token quotas, image-relevance scoring, OCR fallbacks",
-      "SISP Sweden — materialized-view rollout for /scaleups & /industries",
+      "cluster-canary — calibrating the failure-probability threshold + SHAP explanations per cluster",
+      "openwrist — ANCS/CTS/AMS over BLE so the watch talks to iPhone with no App Store app",
       "kubeai-ops — pulling root-cause v2 into a clean public release",
     ],
   },
