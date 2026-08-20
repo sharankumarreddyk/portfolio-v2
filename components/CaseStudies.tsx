@@ -117,7 +117,7 @@ function CaseStudyBlock({ cs, index }: { cs: CaseStudy; index: number }) {
           </div>
         ) : null}
 
-        {cs.slug === "jahopp-ai" ? <ThresholdSlider /> : null}
+        {cs.slug === "cluster-canary" ? <ThresholdSlider /> : null}
 
         <div className="flex flex-wrap items-center gap-3 pt-2">
           <ul className="flex flex-wrap gap-1.5">

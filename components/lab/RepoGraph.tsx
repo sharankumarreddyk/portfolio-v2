@@ -21,21 +21,19 @@ type Edge = {
 };
 
 const REPO_LANG: Record<string, string> = {
-  "jahopp-ai": "Python",
-  "jahopp-backend": "TypeScript",
-  "jahopp-admin": "TypeScript",
-  "jahopp-web": "Svelte",
-  "ssn-web": "TypeScript",
-  "ssn-database": "SQL",
-  "ignite-magic-2.0": "TypeScript",
-  "Jahopp-AI-Qdrant-DB": "Python",
+  "cluster-canary": "Python",
+  "openwrist": "C",
+  "openwrist-ios": "Swift",
+  "kubeai-ops": "Python",
+  "AI-Skills": "Python",
+  "RestaurantOS": "JavaScript",
 };
 
 const LANG_GROUPS: Record<string, number> = {
-  TypeScript: 0,
-  Python: 1,
-  Svelte: 2,
-  SQL: 3,
+  Python: 0,
+  C: 1,
+  Swift: 2,
+  JavaScript: 3,
 };
 
 const GROUP_COLOR = ["#C5FF3D", "#7BC3FF", "#FF8B4A", "#B894FF"];

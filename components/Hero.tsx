@@ -8,16 +8,14 @@ import Reveal from "./Reveal";
 import CountUp from "./CountUp";
 
 const REPO_LANG: Record<string, string> = {
-  "jahopp-ai": "Py",
-  "jahopp-backend": "TS",
-  "jahopp-admin": "TS",
-  "jahopp-web": "Svelte",
-  "ssn-web": "TS",
-  "ssn-database": "SQL",
-  "ignite-magic-2.0": "TS",
-  "Jahopp-AI-Qdrant-DB": "Py",
-  "byggmax-rma": "TS",
+  "cluster-canary": "Py",
+  "openwrist": "C",
+  "openwrist-ios": "Swift",
   "kubeai-ops": "Py",
+  "AI-Skills": "Py",
+  "RestaurantOS": "JS",
+  "College-ERP": "JS",
+  "Gym-website": "Svelte",
 };
 
 function langFor(repoFullName: string): string | null {

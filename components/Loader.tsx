@@ -4,13 +4,12 @@ import { useEffect, useState } from "react";
 import { profile } from "@/lib/data";
 
 const ROTATING_REPOS = [
-  "jahopp-ai",
-  "ssn-web",
+  "cluster-canary",
+  "openwrist",
   "kubeai-ops",
-  "jahopp-backend",
-  "byggmax-rma",
-  "ignite-magic",
-  "ssn-database",
+  "openwrist-ios",
+  "AI-Skills",
+  "RestaurantOS",
 ];
 
 export default function Loader() {

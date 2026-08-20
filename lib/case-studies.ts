@@ -17,79 +17,83 @@ export type CaseStudy = {
   result: string;
   stack: string[];
   stats: CaseStudyStat[];
-  coverKind: "jahopp" | "sisp" | "kubeai";
+  coverKind: "kubeai" | "clustercanary" | "openwrist";
   isPublic: boolean;
   link?: string;
 };
 
 export const caseStudies: CaseStudy[] = [
   {
-    slug: "jahopp-ai",
-    client: "Indpro · Jahopp",
-    title: "AI course generation that survives real users",
-    year: "2025 — present",
-    role: "Lead engineer · AI service",
+    slug: "cluster-canary",
+    client: "Open source",
+    title: "Predicting Kubernetes failures before they page you",
+    year: "2026",
+    role: "Sole author · public",
     oneLiner:
-      "Multi-service AI learning platform — built the course-generation pipeline, RAG ingestion, image relevance scoring, and per-company token quotas.",
+      "ML system that predicts OOMKill and CrashLoopBackOff up to 30 minutes ahead — calibrated failure probabilities with SHAP explanations, served as an in-cluster gRPC sidecar.",
     aside:
-      "Spent way too long tuning the image-relevance threshold. Worth it.",
+      "The hard part isn't the model. It's proving the features don't leak the future.",
     problem:
-      "AI-generated courses were producing cover images that were technically valid but contextually off — a 'cooking' lesson getting a chef hat icon when learners wanted a kitchen scene. Confidence floors were too permissive and the cover-image acceptance rate was hurting course quality scores.",
+      "Kubernetes tells you a pod is failing only once it already has. By the time OOMKill or CrashLoopBackOff fires, the incident is live and the on-call engineer is reacting, not preventing. The signal to see it coming is in the metrics — memory pressure trends, restart cadence, request-latency drift — but nobody's watching it early enough.",
     approach:
-      "Built an image-relevance scoring layer on top of the LLM output. Raised the confidence floor from 0.4 → 0.6 and introduced 'intelligently select best uploaded image as cover' fallback. Wrapped scanned PDFs in an OCR pipeline (Tesseract, replacing PaddleOCR for compatibility). Introduced per-company token quotas with fail-open behaviour so service degradation never blocks paying customers.",
+      "Built a forecasting pipeline on pod-level Prometheus metrics: LightGBM for the core classifier, PyTorch for sequence features, Optuna for tuning, SHAP for per-prediction explanations. Strict leakage detection and Great Expectations data checks keep the training set honest. Serving is a BentoML gRPC sidecar tuned for p95 < 50ms, with Evidently drift detection triggering champion/challenger retrains through Prefect. Validated on chaos-mesh synthetic traces and real Alibaba 2018 production data.",
     tradeoff:
-      "Tighter relevance floor filters some valid images. Accepted — better to surface the upload picker than to ship an off-brand cover. Token quotas trade strict cost control for never-block UX; we drain pending writes on the way down.",
+      "A 30-minute horizon trades lead time for confidence — predict too early and precision collapses into alert fatigue; too late and there's no time to act. The decision threshold is the real knob: it's calibrated per-cluster, not hardcoded.",
     result:
-      "Cover-image acceptance rate up meaningfully. Quota system handles per-company daily limits with bypass for in-progress resumes. 270+ PRs over the life of the AI service; service ships to production weekly.",
+      "Open source, public on GitHub. Emits calibrated failure probability with the top-3 contributing features, routes to PagerDuty / kubeai-ops for automated response, and retrains itself on drift. Phases 1–5 (data pipeline, features, modeling, serving) code-complete.",
     stack: [
       "Python",
-      "FastAPI",
-      "OpenAI · gpt-image-2",
-      "Qdrant",
-      "Tesseract OCR",
-      "RAG",
+      "LightGBM",
+      "PyTorch",
+      "BentoML · gRPC",
+      "Prefect",
+      "Prometheus",
+      "Kubernetes",
     ],
     stats: [
-      { k: "270+", v: "PRs merged" },
-      { k: "0.6", v: "confidence floor" },
-      { k: "Daily", v: "ship cadence" },
+      { k: "30m", v: "ahead of failure" },
+      { k: "<50ms", v: "p95 inference" },
+      { k: "SHAP", v: "top-3 features" },
     ],
-    coverKind: "jahopp",
-    isPublic: false,
+    coverKind: "clustercanary",
+    isPublic: true,
+    link: "https://github.com/sharankumarreddyk/cluster-canary",
   },
   {
-    slug: "sisp-sweden",
-    client: "Indpro · SISP Sweden",
-    title: "Startup-ecosystem analytics, rebuilt on ESNA",
-    year: "2025 — 2026",
-    role: "Full-stack · data + web",
+    slug: "openwrist",
+    client: "Open source",
+    title: "An open-source smartwatch that speaks iPhone natively",
+    year: "2026",
+    role: "Sole author · public",
     oneLiner:
-      "Public-facing analytics surface for the Swedish startup ecosystem. Migrated taxonomy, hardened performance, shipped 20+ materialized views.",
+      "ESP32-S3 smartwatch that pairs to an iPhone over BLE using Apple's own ANCS/CTS/AMS services — notifications, calls, time, and music with no App Store app and no paid developer account.",
     aside:
-      "Felt like rewiring a building while people were still inside it.",
+      "Turns out iOS will talk to you for free — if you speak its native BLE dialect.",
     problem:
-      "The platform's industry classification was inherited from Crunchbase taxonomy — proprietary, expensive, and a poor fit for Swedish public-sector reporting. KPI views were slow enough to trigger Sentry timeouts on /scaleups and /industries.",
+      "Every hobbyist smartwatch that wants iPhone notifications hits the same wall: Apple's App Store gate and a $99/year developer account just to ship a companion app. Most projects give up and target Android, or fake it with a flaky always-on connection.",
     approach:
-      "Cut the dependency: migrated web's industry + focus-area views from Crunchbase to ESNA (the Swedish public taxonomy) in a single zero-downtime PR. Materialized the six slowest KPI/chart views to fix the Sentry-tracked p95 regressions. Added defensive safety nets for blank Explore-Categories grids and capped year axes at closed fiscal years.",
+      "Skipped the App Store entirely by speaking Apple's native BLE services — ANCS for notifications and caller ID, CTS for time sync, AMS for music control. Firmware is ESP-IDF + ESP-Brookesia + LVGL in C on an ESP32-S3 with touch display, IMU, and BLE. A SwiftUI companion app (CoreBluetooth + HealthKit) layers on step sync, weather, and over-the-air firmware updates — plus TOTP, sleep tracking, and gesture controls.",
     tradeoff:
-      "Materialized views mean stale data during refresh windows — accepted because the views are aggregate/historical, and we control refresh cadence.",
+      "Native BLE services mean zero App Store friction but hard limits — you get exactly the data Apple exposes, no more. The companion app fills the gaps, but the core watch stays useful even with nothing installed.",
     result:
-      "Industries page renders without the long-tail timeout that was paging Sentry. Capital-distribution-concentration views ship under 200ms. Materialized views now back: investments redesign, focus-area unicorn count, scaleup growth-trajectory cohorts.",
+      "Open source (MIT), public on GitHub. Core BLE protocol and portable firmware tested; companion app functional. On-device hardware bring-up pending physical board availability.",
     stack: [
-      "Next.js",
-      "Supabase",
-      "PostgreSQL",
-      "Materialized Views",
-      "Vercel",
-      "Sentry",
+      "C",
+      "ESP-IDF",
+      "LVGL",
+      "SwiftUI",
+      "CoreBluetooth",
+      "HealthKit",
+      "BLE",
     ],
     stats: [
-      { k: "20+", v: "materialized views" },
-      { k: "0", v: "downtime on migrate" },
-      { k: "Sentry", v: "p95 regressions cleared" },
+      { k: "BLE", v: "native ANCS/CTS/AMS" },
+      { k: "iOS", v: "no App Store app" },
+      { k: "MIT", v: "open source" },
     ],
-    coverKind: "sisp",
-    isPublic: false,
+    coverKind: "openwrist",
+    isPublic: true,
+    link: "https://github.com/sharankumarreddyk/openwrist",
   },
   {
     slug: "kubeai-ops",

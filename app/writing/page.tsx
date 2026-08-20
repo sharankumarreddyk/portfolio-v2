@@ -25,11 +25,11 @@ const POSTS: Post[] = [
     status: "soon",
   },
   {
-    slug: "image-relevance-floor",
-    title: "What raising an AI relevance floor from 0.4 to 0.6 actually did",
+    slug: "alert-threshold-precision-recall",
+    title: "Where you set the alert threshold is the whole product",
     date: "soon",
     description:
-      "A tuning story from the Jahopp image-relevance pipeline. The cost of false positives, the cost of false negatives, and why the right answer wasn't either.",
+      "A tuning story from cluster-canary's failure predictor. The cost of a false page, the cost of a missed OOMKill, and why the calibrated threshold is per-cluster, not a constant.",
     status: "soon",
   },
   {

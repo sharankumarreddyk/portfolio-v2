@@ -11,14 +11,14 @@ type Candidate = {
   label: string;
 };
 
-// Synthetic candidate covers — abstract, no org IP, just gradients + patterns.
+// Synthetic pods — abstract, no real cluster data, just predicted failure probability.
 const CANDIDATES: Candidate[] = [
-  { score: 0.31, hue: 220, pattern: "noise", label: "off-topic" },
-  { score: 0.48, hue: 280, pattern: "stripes", label: "stock-photo feel" },
-  { score: 0.55, hue: 30, pattern: "dots", label: "borderline" },
-  { score: 0.62, hue: 80, pattern: "wave", label: "on-topic, generic" },
-  { score: 0.74, hue: 90, pattern: "grid", label: "on-topic, sharp" },
-  { score: 0.88, hue: 95, pattern: "solid", label: "ideal cover" },
+  { score: 0.14, hue: 220, pattern: "noise", label: "healthy" },
+  { score: 0.33, hue: 200, pattern: "stripes", label: "stable" },
+  { score: 0.52, hue: 40, pattern: "dots", label: "borderline" },
+  { score: 0.64, hue: 70, pattern: "wave", label: "degrading" },
+  { score: 0.78, hue: 85, pattern: "grid", label: "memory climbing" },
+  { score: 0.91, hue: 95, pattern: "solid", label: "OOMKill imminent" },
 ];
 
 export default function ThresholdSlider() {
@@ -33,15 +33,15 @@ export default function ThresholdSlider() {
             try it · live
           </div>
           <p className="mt-1.5 text-sm leading-snug text-[color:var(--color-fg)]">
-            Drag the threshold. See what we used to ship — and what we
-            filter now.
+            Drag the alert threshold. See which pods we page on — and which
+            failures we&rsquo;d miss.
           </p>
         </div>
         <div className="text-right">
           <div className="display text-2xl leading-none text-[color:var(--color-fg)] sm:text-3xl">
             {t.toFixed(2)}
           </div>
-          <div className="num-tag mt-1">relevance floor</div>
+          <div className="num-tag mt-1">alert threshold</div>
         </div>
       </div>
 
@@ -55,7 +55,7 @@ export default function ThresholdSlider() {
             step="0.01"
             value={t}
             onChange={(e) => setT(Number(e.target.value))}
-            aria-label="Relevance threshold"
+            aria-label="Alert threshold"
             className="threshold-range w-full"
             style={
               {
@@ -63,7 +63,7 @@ export default function ThresholdSlider() {
               } as React.CSSProperties
             }
           />
-          {/* Threshold tick at 0.6 (the real production value) */}
+          {/* Threshold tick at 0.6 (the calibrated per-cluster default) */}
           <div
             aria-hidden
             className="pointer-events-none absolute top-1/2 h-3 w-px -translate-y-1/2 bg-[color:var(--color-muted)]"
@@ -78,8 +78,8 @@ export default function ThresholdSlider() {
           </div>
         </div>
         <div className="mt-2 flex justify-between font-mono text-[10px] uppercase tracking-widest text-[color:var(--color-muted)]">
-          <span>permissive · 0.0</span>
-          <span>strict · 1.0</span>
+          <span>noisy · 0.0</span>
+          <span>quiet · 1.0</span>
         </div>
       </div>
 
@@ -114,7 +114,7 @@ export default function ThresholdSlider() {
                   className="font-mono text-[8px] uppercase tracking-widest"
                   style={{ color: passes ? ACCENT : "#666" }}
                 >
-                  {passes ? "ACC" : "REJ"}
+                  {passes ? "PAGE" : "OK"}
                 </span>
               </div>
             </div>
@@ -128,17 +128,17 @@ export default function ThresholdSlider() {
           <span className="display text-xl text-[color:var(--color-fg)] sm:text-2xl">
             {accepted}
           </span>{" "}
-          / 6 covers accepted at floor{" "}
+          / 6 pods paged at threshold{" "}
           <span className="font-mono text-[color:var(--color-fg)]">
             {t.toFixed(2)}
           </span>
         </div>
         <div className="num-tag">
           {t < 0.6
-            ? "pre-fix · too many false positives"
+            ? "lower · more false pages, alert fatigue"
             : t === 0.6
-              ? "current production threshold"
-              : "stricter · fewer false positives, more rejected"}
+              ? "calibrated production threshold"
+              : "higher · fewer pages, more missed failures"}
         </div>
       </div>
 
